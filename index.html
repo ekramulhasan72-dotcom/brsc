@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--
+  Bhoradoba Royals Sporting Club - Version 1 (design only)
+  HOW THIS FILE IS ORGANIZED:
+  1. <style>   = colors and layout (CSS)
+  2. <body>    = the page content (HTML)
+  3. <script>  = language toggle, menu, and future Supabase notes (JavaScript)
+
+  BENGALI TEXT: every translatable text looks like
+     <span data-bn="বাংলা লেখা">English text</span>
+  Change the English between the tags, and the Bengali inside data-bn="...".
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> BRSC </title>
+<style>
+  /* ===== COLORS: change these to restyle the whole site ===== */
+  :root {
+    --blue: #1a3fa8;
+    --dark: #0e2468;
+    --light: #eef3ff;
+    --white: #ffffff;
+    --text: #1d2440;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Segoe UI", "Noto Sans Bengali", Arial, sans-serif;
+         color: var(--text); background: var(--white); line-height: 1.6; }
+
+  /* ===== TOP BAR AND MENU ===== */
+  header { position: sticky; top: 0; z-index: 10; background: var(--dark);
+           color: var(--white); display: flex; align-items: center;
+           justify-content: space-between; padding: 8px 14px;
+           box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700;
+           font-size: 14px; text-decoration: none; color: var(--white); }
+  /* LOGO: see the instructions in the HTML below to replace it */
+  .logo { width: 42px; height: 42px; border-radius: 50%; background: var(--white);
+          object-fit: cover; border: 2px solid var(--white); }
+  .tools { display: flex; gap: 8px; }
+  .tools button { background: var(--white); color: var(--dark); border: 0;
+                  border-radius: 8px; padding: 8px 12px; font-weight: 700;
+                  font-size: 14px; cursor: pointer; }
+  nav { display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--blue); padding: 8px 0; }
+  nav.open { display: block; }
+  nav a { display: block; padding: 12px 20px; color: var(--white);
+          text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.15); }
+
+  /* ===== COVER PHOTO ===== */
+  /* To use your photo: put its file name in the url() below, e.g. url("cover.jpg") */
+  .hero { min-height: 35vh; display: flex; align-items: center; justify-content: center;
+          text-align: center; color: var(--white); padding: 30px 18px;
+          background: linear-gradient(rgba(14,36,104,.65), rgba(26,63,168,.75)),
+                      url("Cover, png") center/cover, var(--blue); }
+  .hero h1 { font-size: 30px; line-height: 1.25; margin-bottom: 10px; }
+  .hero p { font-size: 16px; margin-bottom: 20px; }
+  .btn { display: inline-block; background: var(--white); color: var(--dark);
+         padding: 12px 24px; border-radius: 30px; font-weight: 700;
+         text-decoration: none; margin: 4px; }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 44px 18px; max-width: 960px; margin: 0 auto; }
+  section:nth-of-type(even) { background: var(--light); max-width: none; }
+  section:nth-of-type(even) > .inner { max-width: 960px; margin: 0 auto; }
+  h2 { color: var(--blue); font-size: 26px; margin-bottom: 6px; }
+  h2::after { content: ""; display: block; width: 50px; height: 4px;
+              background: var(--blue); border-radius: 2px; margin: 6px 0 18px; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: var(--white); border-radius: 14px; padding: 18px;
+          border: 1px solid #d6e0ff; box-shadow: 0 3px 10px rgba(26,63,168,.08); }
+  .card h3 { color: var(--dark); margin-bottom: 6px; }
+  .tag { display: inline-block; background: var(--blue); color: var(--white);
+         font-size: 12px; padding: 2px 10px; border-radius: 12px; margin-bottom: 6px; }
+  .notice-box { background: #fff7d6; border: 1px solid #e6c84d; color: #5a4a00;
+                padding: 10px 14px; border-radius: 10px; margin-bottom: 16px; font-size: 14px; }
+  .photo { aspect-ratio: 4/3; border-radius: 12px; display: flex; align-items: center;
+           justify-content: center; color: var(--white); font-weight: 700;
+           background: linear-gradient(135deg, var(--blue), var(--dark)); }
+  table { width: 100%; border-collapse: collapse; background: var(--white);
+          border-radius: 10px; overflow: hidden; font-size: 14px; }
+  th { background: var(--blue); color: var(--white); text-align: left; }
+  th, td { padding: 10px; border-bottom: 1px solid #d6e0ff; }
+  .poll-opt { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 12px;
+              border-radius: 10px; border: 1px solid var(--blue); background: var(--white);
+              color: var(--blue); font-size: 15px; opacity: .6; }
+  footer { background: var(--dark); color: var(--white); text-align: center; padding: 26px 16px; font-size: 14px; }
+
+  @media (min-width: 800px) {
+    nav { display: flex !important; position: static; background: none; padding: 0; }
+    nav a { border: 0; padding: 8px 10px; font-size: 14px; }
+    #menuBtn { display: none; }
+    .hero h1 { font-size: 46px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <a class="brand" href="#home">
+    <!-- LOGO: upload your logo to GitHub as logo.png, then it shows here automatically.
+         Until then, the club's initials "BR" are shown instead. -->
+    <img class="logo" src="logo.png" alt="Club logo"
+         onerror="this.outerHTML='<div class=logo style=&quot;display:flex;align-items:center;justify-content:center;color:#1a3fa8;font-weight:800&quot;>BR</div>'">
+    <span data-bn="ভরাডোবা রয়্যালস স্পোর্টিং ক্লাব"> BRSC </span>
+  </a>
+  <div class="tools">
+    <button id="langBtn" onclick="toggleLanguage()">বাংলা</button>
+    <button id="menuBtn" onclick="toggleMenu()">☰</button>
+  </div>
+  <nav id="menu" onclick="closeMenu()">
+    <a href="#home" data-bn="হোম">Home</a>
+    <a href="#about" data-bn="আমাদের সম্পর্কে">About</a>
+    <a href="#cricket" data-bn="ক্রিকেট">Cricket</a>
+    <a href="#football" data-bn="ফুটবল">Football</a>
+    <a href="#badminton" data-bn="ব্যাডমিন্টন">Badminton</a>
+    <a href="#notices" data-bn="নোটিশ">Notices</a>
+    <a href="#gallery" data-bn="গ্যালারি">Gallery</a>
+    <a href="#sponsors" data-bn="স্পন্সর">Sponsors</a>
+    <a href="#polls" data-bn="ক্লাব পোল">Club Polls</a>
+    <a href="#finance" data-bn="আর্থিক হিসাব">Finance</a>
+  </nav>
+</header>
+
+<!-- ================= HOME / COVER ================= -->
+<div class="hero" id="home">
+  <div>
+    <h1 data-bn="ভরাডোবা রয়্যালস স্পোর্টিং ক্লাব">Bhoradoba Royals Sporting Club</h1>
+    <p data-bn="ভরাডোবা, ভালুকা, ময়মনসিংহ, বাংলাদেশ">Bhoradoba, Bhaluka, Mymensingh, Bangladesh</p>
+    <a class="btn" href="#about" data-bn="আমাদের জানুন">Get to know us</a>
+    <a class="btn" href="#notices" data-bn="সর্বশেষ নোটিশ">Latest notices</a>
+  </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <h2 data-bn="আমাদের সম্পর্কে">About Us</h2>
+  <p data-bn="আমরা ভরাডোবা গ্রামের তরুণদের নিয়ে গঠিত একটি ক্রীড়া ক্লাব। খেলাধুলার মাধ্যমে ঐক্য, শৃঙ্খলা ও বন্ধুত্ব গড়াই আমাদের লক্ষ্য। (নমুনা লেখা — পরে বদলে নিন)">
+    We are a sports club built by the young people of Bhoradoba. Our goal is to grow unity, discipline and friendship through sport. (Sample text — replace later)</p>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h3 data-bn="🎯 আমাদের লক্ষ্য">🎯 Our Mission</h3>
+      <p data-bn="গ্রামের তরুণদের খেলাধুলায় উৎসাহিত করা।">Encourage village youth to play sport.</p></div>
+    <div class="card"><h3 data-bn="📍 অবস্থান">📍 Location</h3>
+      <p data-bn="ভরাডোবা, ভালুকা, ময়মনসিংহ">Bhoradoba, Bhaluka, Mymensingh</p></div>
+    <div class="card"><h3 data-bn="🤝 সদস্য হোন">🤝 Become a Member</h3>
+      <p data-bn="সদস্য নিবন্ধন শীঘ্রই আসছে।">Member registration is coming soon.</p></div>
+  </div>
+</section>
+
+<!-- ================= CRICKET ================= -->
+<section id="cricket">
+  <div class="inner">
+  <h2 data-bn="🏏 ক্রিকেট">🏏 Cricket</h2>
+  <div class="grid">
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span>
+      <h3 data-bn="রয়্যালস ক্রিকেট দল">Royals Cricket Team</h3>
+      <p data-bn="অনুশীলন: শুক্রবার বিকাল ৪টা">Practice: Friday, 4:00 PM</p></div>
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span>
+      <h3 data-bn="পরবর্তী ম্যাচ">Next Match</h3>
+      <p data-bn="রয়্যালস বনাম প্রতিপক্ষ দল — তারিখ ঠিক হয়নি">Royals vs Opponent — date to be decided</p></div>
+  </div>
+  </div>
+</section>
+
+<!-- ================= FOOTBALL ================= -->
+<section id="football">
+  <h2 data-bn="⚽ ফুটবল">⚽ Football</h2>
+  <div class="grid">
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span>
+      <h3 data-bn="রয়্যালস ফুটবল দল">Royals Football Team</h3>
+      <p data-bn="অনুশীলন: শনিবার বিকাল ৫টা">Practice: Saturday, 5:00 PM</p></div>
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span>
+      <h3 data-bn="টুর্নামেন্ট">Tournament</h3>
+      <p data-bn="স্থানীয় টুর্নামেন্টের খবর এখানে আসবে।">Local tournament news will appear here.</p></div>
+  </div>
+</section>
+
+<!-- ================= BADMINTON ================= -->
+<section id="badminton">
+  <div class="inner">
+  <h2 data-bn="🏸 ব্যাডমিন্টন">🏸 Badminton</h2>
+  <div class="grid">
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span>
+      <h3 data-bn="রয়্যালস ব্যাডমিন্টন দল">Royals Badminton Team</h3>
+      <p data-bn="অনুশীলন: প্রতিদিন সন্ধ্যা ৭টা">Practice: Every evening, 7:00 PM</p></div>
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span>
+      <h3 data-bn="নতুন দল">New Teams</h3>
+      <p data-bn="ভবিষ্যতে অ্যাডমিন প্যানেল থেকে নতুন দল যোগ করা যাবে।">New teams can be added later from the admin panel.</p></div>
+  </div>
+  </div>
+</section>
+
+<!-- ================= NOTICES ================= -->
+<section id="notices">
+  <h2 data-bn="📢 নোটিশ">📢 Notices</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">20 Oct 2026</span>
+      <h3 data-bn="ক্লাব সভা">Club Meeting</h3>
+      <p data-bn="(নমুনা) সকল সদস্যকে সভায় উপস্থিত থাকার অনুরোধ।">(Sample) All members are requested to attend the meeting.</p></div>
+    <div class="card"><span class="tag">15 Oct 2026</span>
+      <h3 data-bn="নতুন জার্সি">New Jerseys</h3>
+      <p data-bn="(নমুনা) নতুন জার্সির তথ্য শীঘ্রই জানানো হবে।">(Sample) Details about new jerseys will be shared soon.</p></div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section id="gallery">
+  <div class="inner">
+  <h2 data-bn="📸 গ্যালারি">📸 Gallery</h2>
+  <!-- To add a real photo, replace a .photo div with: <img src="photo1.jpg" style="width:100%;border-radius:12px"> -->
+  <div class="grid">
+    <div class="photo" data-bn="ছবি ১">Photo 1</div>
+    <div class="photo" data-bn="ছবি ২">Photo 2</div>
+    <div class="photo" data-bn="ছবি ৩">Photo 3</div>
+    <div class="photo" data-bn="ভিডিও (ইউটিউব লিংক)">Video (YouTube link)</div>
+  </div>
+  </div>
+</section>
+
+<!-- ================= SPONSORS ================= -->
+<section id="sponsors">
+  <h2 data-bn="🤝 স্পন্সর">🤝 Sponsors</h2>
+  <div class="grid">
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span><h3 data-bn="স্পন্সর ১">Sponsor 1</h3></div>
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span><h3 data-bn="স্পন্সর ২">Sponsor 2</h3></div>
+    <div class="card"><span class="tag" data-bn="নমুনা">Sample</span><h3 data-bn="স্পন্সর ৩">Sponsor 3</h3></div>
+  </div>
+</section>
+
+<!-- ================= CLUB POLLS ================= -->
+<section id="polls">
+  <div class="inner">
+  <h2 data-bn="🗳️ ক্লাব পোল">🗳️ Club Polls</h2>
+  <div class="notice-box" data-bn="⚠️ এটি শুধু ডিজাইনের নমুনা। লগইন ও গোপন ভোট এখনো কাজ করে না — এর জন্য পরবর্তী ধাপে নিরাপদ ব্যাকএন্ড লাগবে।">
+    ⚠️ This is a design preview only. Login and secret voting do NOT work yet — they need a secure backend in a later step.</div>
+  <div class="card">
+    <h3 data-bn="নমুনা প্রশ্ন: এ বছরের ম্যাচ ফি কত হবে?">Sample question: What should this year's match fee be?</h3>
+    <button class="poll-opt" disabled>৳ 50</button>
+    <button class="poll-opt" disabled>৳ 100</button>
+    <button class="poll-opt" disabled>৳ 150</button>
+  </div>
+  </div>
+</section>
+
+<!-- ================= FINANCE ================= -->
+<section id="finance">
+  <h2 data-bn="💰 আর্থিক হিসাব">💰 Finance</h2>
+  <div class="notice-box" data-bn="⚠️ নিচের সংখ্যাগুলো সম্পূর্ণ নকল নমুনা, ক্লাবের আসল হিসাব নয়। আসল হিসাব পরবর্তী ধাপে নিরাপদ ডাটাবেস যোগ করার পর আসবে।">
+    ⚠️ The numbers below are completely fake samples, NOT real club records. Real records will come after we add a secure database.</div>
+  <div style="overflow-x:auto">
+  <table>
+    <tr><th data-bn="বিবরণ">Details</th><th data-bn="ধরন">Type</th><th data-bn="পরিমাণ">Amount</th></tr>
+    <tr><td data-bn="মাসিক চাঁদা (নমুনা)">Monthly contribution (sample)</td><td data-bn="আয়">Income</td><td>৳ 1,000</td></tr>
+    <tr><td data-bn="ক্রিকেট বল কেনা (নমুনা)">Cricket balls (sample)</td><td data-bn="ব্যয়">Expense</td><td>৳ 400</td></tr>
+    <tr><td data-bn="স্পন্সর অনুদান (নমুনা)">Sponsor donation (sample)</td><td data-bn="আয়">Income</td><td>৳ 2,000</td></tr>
+  </table>
+  </div>
+</section>
+
+<footer>
+  <p data-bn="© ২০২৬ ভরাডোবা রয়্যালস স্পোর্টিং ক্লাব">© 2026 Bhoradoba Royals Sporting Club</p>
+  <p data-bn="ভরাডোবা, ভালুকা, ময়মনসিংহ, বাংলাদেশ">Bhoradoba, Bhaluka, Mymensingh, Bangladesh</p>
+</footer>
+
+<script>
+  /* ===== 1. LANGUAGE TOGGLE ===== */
+  var currentLang = "en";
+  // Save the English text the first time, so we can switch back.
+  document.querySelectorAll("[data-bn]").forEach(function (el) {
+    el.setAttribute("data-en", el.textContent.trim());
+  });
+  function toggleLanguage() {
+    currentLang = currentLang === "en" ? "bn" : "en";
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll("[data-bn]").forEach(function (el) {
+      el.textContent = el.getAttribute(currentLang === "bn" ? "data-bn" : "data-en");
+    });
+    document.getElementById("langBtn").textContent = currentLang === "en" ? "বাংলা" : "English";
+  }
+
+  /* ===== 2. MOBILE MENU ===== */
+  function toggleMenu() { document.getElementById("menu").classList.toggle("open"); }
+  function closeMenu()  { document.getElementById("menu").classList.remove("open"); }
+
+  /* ===== 3. FUTURE BACKEND PLAN (Supabase) - NOTHING BELOW WORKS YET =====
+     Later steps will add, in this order:
+       a) SUPABASE_URL and SUPABASE_ANON_KEY (safe-to-share public keys)
+       b) Member registration and login        -> Supabase Auth
+       c) Roles (super admin, sports, finance) -> a "profiles" table + security rules
+       d) Notices, teams, gallery, sponsors    -> database tables
+       e) Secret polls                         -> votes stored without voter names
+       f) Finance records                      -> only finance admins can edit
+     NEVER put a secret "service_role" key in this file. */
+  var SUPABASE_URL = "";       // to be filled in later
+  var SUPABASE_ANON_KEY = "";  // to be filled in later
+</script>
+</body>
+  </html>
